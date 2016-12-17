@@ -1,21 +1,18 @@
 require 'json'
 
 module ApplicationHelper
-  def initializer
+  def initialize(*args)
     super
-    @rev_cache = nil
+    @rev_cache = parse_rev_manifest
   end
 
   def asset(path)
-    @rev_cache ||= parse_rev_manifest
-
     "/public/build/#{@rev_cache[path]}"
   end
 
   private
 
   def parse_rev_manifest
-    file = File.read "#{Rails.root}/public/build/rev-manifest.json"
-    JSON.parse file
+    JSON.parse File.read("#{Rails.root}/public/build/rev-manifest.json")
   end
 end
