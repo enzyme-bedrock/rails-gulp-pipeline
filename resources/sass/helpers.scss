@@ -1,7 +1,0 @@
-@function color($key) {
-    @return map-get($colors, $key);
-}
-
-@function font($key) {
-    @return unquote(map-get($fonts, $key));
-}
