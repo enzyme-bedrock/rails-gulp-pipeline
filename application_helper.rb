@@ -1,18 +1,11 @@
-require 'json'
+# app/helpers/application_helper.rb
+
+require 'json_file_reader'
 
 module ApplicationHelper
-  def initialize(*args)
-    super
-    @rev_cache = parse_rev_manifest
-  end
-
   def asset(path)
-    "/public/build/#{@rev_cache[path]}"
-  end
+    @rev_cache ||= JsonFileReader.parse "#{Rails.root}/public/build/rev-manifest.json"
 
-  private
-
-  def parse_rev_manifest
-    JSON.parse File.read("#{Rails.root}/public/build/rev-manifest.json")
+    "/build/#{@rev_cache[path]}"
   end
 end
